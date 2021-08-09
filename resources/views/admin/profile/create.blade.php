@@ -11,7 +11,7 @@
                     
                     @if (count($errors)>0)
                         <ul>
-                            @foreach($erroes->all() as $e)
+                            @foreach($errors->all() as $e)
                                 <li>{{ $e }}</li>
                             @endforeach
                         </ul>
@@ -37,7 +37,7 @@
                     <div class="form-group row">
                         <label class="col-md-2">自己紹介欄</label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="introducrion" rows="20">{{old('introducrion')}}</textarea>
+                            <textarea class="form-control" name="introduction" rows="20">{{old('introduction')}}</textarea>
                         </div>
                     </div>
                     {{csrf_field()}}
