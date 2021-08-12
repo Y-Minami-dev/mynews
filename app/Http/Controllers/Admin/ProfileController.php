@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 
 use App\Profile;
 
+use App\ProfileHistory;
+
+use Carbon\Carbon;
+
 class ProfileController extends Controller
 {
     //
@@ -40,9 +44,22 @@ class ProfileController extends Controller
         return view('admin.profile.edit',['profile_form' => $profile]);
     }
     
-    public function update()
+    public function update(Request $request)
     {
-        return redirect('admin/profile/edit');
+        $this->validate($request, Profile::$rules);
+        $profile = Profile::find($request->id);
+        $profile_form = $request->all();
+        
+        $profile->fill($profile_form)->save();
+        
+        $history = new ProfileHistory;
+        $history->profile_id = $profile->id;
+        $history->edited_at = Carbon::now();
+        $history->save();
+        
+        return redirect('admin/profile/edit?id=' . $request->id);
+        
+        
     }
     
     
