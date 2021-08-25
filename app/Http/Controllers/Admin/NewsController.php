@@ -22,25 +22,29 @@ class NewsController extends Controller
     public function create(Request $request)
     {
         
-        $this->validate($request, News::$rules);
+        /*$this->validate($request, News::$rules);*/
         
         $news = new News;
-        $form = $request->all();
+        
+        $news->title = $request->hoge;
+        $news->body = $request->body;
+        
+        /*$form = $request->all(); //フォームの内容を一括ですべて取得
         
         if(isset($form['image'])){
             $path = $request->file('image')->store('public/image');
             $news->image_path = basename($path);
         } else {
             $news->image_path = null;
-        }
+        }*/
         
-        unset($form['_token']);
+        /*unset($form['_token']);
         unset($form['image']);
         
-        $news->fill($form);
+        $news->fill($form);*/ //Newsモデルのプロパティに一括で渡す
         $news->save();
         
-        return redirect('admin/news/create');
+        return redirect('admin/news');
     }
     
     public function index(Request $request)
@@ -51,7 +55,7 @@ class NewsController extends Controller
         } else {
             $posts = News::all();
         }
-        return view('admin.news.index', ['hoge' => $posts, 'cond_title' => $cond_title]);
+        return view('admin.news.index', ['hoge' => $posts, 'cond_title' => $cond_title,'hoge2' => 'hello']);
     }
     
     public function edit(Request $request)
